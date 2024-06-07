@@ -1,71 +1,19 @@
-import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import Guitar from "./components/Guitar";
-import { db } from "./Data/db";
+import { useCart } from "./hooks/useCart";
 
 function App() {
-
-	const initialCart = () => {
-		const localStorageCart = localStorage.getItem("cart")
-		return localStorageCart ? JSON.parse(localStorageCart) : []
-	}
-
-	const [data] = useState(db);
-	const [cart, setCart] = useState(initialCart);
-
-	useEffect(() => {
-		localStorage.setItem('cart', JSON.stringify(cart))
-	}, [cart])
-
-	function addToCart(item) {
-		const itemExist = cart.findIndex((guitar) => guitar.id === item.id);
-		if (itemExist >= 0) {
-			// Existe en el carrito
-			const updatedCart = [...cart];
-			cart[itemExist].quantity++;
-			setCart(updatedCart);
-		} else {
-			item.quantity = 1;
-			setCart([...cart, item]);
-		}
-	}
-
-	function removeFromCart(id) {
-		setCart((prevCart) => prevCart.filter((guitar) => guitar.id !== id));
-	}
-
-	function increaseQuanty(id) {
-		const updatedCart = cart.map(item => {
-			if(item.id === id && item.quantity < 5 ) {
-				return {
-					...item, 
-					quantity: item.quantity + 1
-				}
-			}
-			return item
-		})
-		setCart(updatedCart)
-	}
-
-	function decreaseQuanty(id) {
-		const updatedCart = cart.map(item => {
-			if(item.id === id && item.quantity > 1) {
-				return {
-					...item, 
-					quantity: item.quantity - 1
-				}
-			}
-			return item
-		})
-		setCart(updatedCart)
-	}
-
-	function clearCart() {
-		setCart([])
-	}
-
-	function saveLocalStorage() {
-	}
+	const {
+		data,
+		cart,
+		addToCart,
+		removeFromCart,
+		increaseQuanty,
+		decreaseQuanty,
+		clearCart,
+		isEmpty,
+		cartTotal
+	} = useCart();
 
 	return (
 		<>
@@ -75,6 +23,8 @@ function App() {
 				increaseQuanty={increaseQuanty}
 				decreaseQuanty={decreaseQuanty}
 				clearCart={clearCart}
+				isEmpty={isEmpty}
+				cartTotal={cartTotal}
 			/>
 
 			<main className="container-xl mt-5">
@@ -85,7 +35,6 @@ function App() {
 						<Guitar
 							key={guitar.id}
 							guitar={guitar}
-							setCart={setCart}
 							addToCart={addToCart}
 						/>
 					))}

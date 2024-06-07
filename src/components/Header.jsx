@@ -1,13 +1,12 @@
-import { useMemo } from "react";
-
-export default function Header({ cart, removeFromCart, increaseQuanty, decreaseQuanty, clearCart }) {
-	// State derivado
-
-	const isEmpty = useMemo(() => cart.length === 0, [cart]);
-	const cartTotal = useMemo(() =>
-		cart.reduce((total, item) => total + item.quantity * item.price, 0)
-	);
-
+export default function Header({
+	cart,
+	removeFromCart,
+	increaseQuanty,
+	decreaseQuanty,
+	clearCart,
+	isEmpty,
+	cartTotal,
+}) {
 	return (
 		<header className="py-5 header">
 			<div className="container-xl">
@@ -64,7 +63,11 @@ export default function Header({ cart, removeFromCart, increaseQuanty, decreaseQ
 															<button
 																type="button"
 																className="btn btn-dark"
-                                                                onClick={() => decreaseQuanty(guitar.id)}
+																onClick={() =>
+																	decreaseQuanty(
+																		guitar.id
+																	)
+																}
 															>
 																-
 															</button>
@@ -72,7 +75,11 @@ export default function Header({ cart, removeFromCart, increaseQuanty, decreaseQ
 															<button
 																type="button"
 																className="btn btn-dark"
-                                                                onClick={() => increaseQuanty(guitar.id)}
+																onClick={() =>
+																	increaseQuanty(
+																		guitar.id
+																	)
+																}
 															>
 																+
 															</button>
@@ -102,10 +109,10 @@ export default function Header({ cart, removeFromCart, increaseQuanty, decreaseQ
 										</p>
 									</>
 								)}
-								<button 
-                                    className="btn btn-dark w-100 mt-3 p-2"
-                                    onClick={clearCart}
-                                >
+								<button
+									className="btn btn-dark w-100 mt-3 p-2"
+									onClick={clearCart}
+								>
 									Vaciar Carrito
 								</button>
 							</div>

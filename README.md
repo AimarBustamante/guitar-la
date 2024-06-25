@@ -1,5 +1,6 @@
 # 🎸 GuitarLA
-![Profile Image](public/img/GuitarLA-Mockup.png)
+![Mockup-browser](public/mockup-browser.webp)
+![Mockup-browser-2](public/mockup-browser-2.webp)
 
 
 ## 📖 Project Description
